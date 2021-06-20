@@ -23,3 +23,28 @@ body {
 .material-icons {
   font-weight: 600;
 }
+
+input {
+  height: 40px;
+  margin-right: 5px;
+  background-color: darkseagreen;
+  border: solid 3px black;
+}
+
+.search-form {
+  position: fixed;
+
+  top: 30px;
+  left: 370px;
+}
+
+.btn {
+  width: 150px;
+  height: 40px;
+  background-color: chartreuse;
+  border: solid 3px black;
+}
+
+.btn:active {
+  background-color: forestgreen;
+}

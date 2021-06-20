@@ -7,10 +7,13 @@ export default class ImagesApiService {
         this.page = 1;
     }
 
-   async fatchImage() {
+    async fatchImage() {
+       
        const response = await fetch(`${BASE_URL}?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`);
        const image = await response.json();
        const data = await image.hits;
+   
+       this.incrementPage();
        return data;
     }
 

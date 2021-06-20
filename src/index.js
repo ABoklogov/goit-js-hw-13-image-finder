@@ -8,18 +8,26 @@ const refs = {
 };
 
 const imagesApiService = new ImagesApiService();
-refs.buttonEl.addEventListener('click', onImagesButtonClick);
+refs.formEl.addEventListener('click', onImagesButtonClick);
 
 async function onImagesButtonClick(e) {
     try {
-        await imagesApiService.fatchImage()
-        .then(renderImagesCards);
-        
+
+        if (e.target.className === 'btn' && e.currentTarget.elements.query.value !== '') {
+
+            imagesApiService.query = e.currentTarget.elements.query.value.trim();
+            
+            const fatch = await imagesApiService.fatchImage();
+            renderImagesCards(fatch)
+            console.log(fatch);
+            // .then(renderImagesCards);
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
 function renderImagesCards(image) {
+    console.log(image);
     refs.galleryEl.insertAdjacentHTML('beforeend', imageCard(image));
 }

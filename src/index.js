@@ -19,8 +19,6 @@ async function onImagesButtonClick(e) {
             
             const fatch = await imagesApiService.fatchImage();
             renderImagesCards(fatch)
-            console.log(fatch);
-            // .then(renderImagesCards);
         }
     } catch (error) {
         console.log(error);
@@ -28,6 +26,5 @@ async function onImagesButtonClick(e) {
 }
 
 function renderImagesCards(image) {
-    console.log(image);
     refs.galleryEl.insertAdjacentHTML('beforeend', imageCard(image));
 }

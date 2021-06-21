@@ -1,6 +1,7 @@
 import { notice, info, success, error } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/Material.css';
+// import * as basicLightbox from 'basiclightbox'
 
 import ImagesApiService from './js/apiService.js';
 import imageCard from './partials/imageCard.hbs';
@@ -12,7 +13,6 @@ const refs = {
     galleryEl: document.querySelector('.gallery'),
 };
 
-
 const imagesApiService = new ImagesApiService();
 
 refs.formEl.addEventListener('click', onImagesButtonClick);
@@ -23,37 +23,45 @@ async function onImagesButtonClick(e) {
             imagesApiService.resetPage();
         }
         
-        // console.log(refs.inputEl.value === '');
+        if (e.target.className === 'btn' && refs.inputEl.value === '') {
+            info({
+            text: "Введите что нибудь в строку!"
+            });
+        }
         
         if (e.target.className === 'btn' && e.currentTarget.elements.query.value !== '') {
             
-            // if (refs.inputEl.value === '') {
-            //     console.log(123);
-            //     info({
-            //     text: "Введите что нибудь в строку"
-            //     });
-            // }
+            buttonIsOff();
             
-            refs.buttonEl.disabled = true;
-            
-            refs.galleryEl.scrollIntoView({
-            behavior: 'smooth',
-            block: 'end',
-            });
-
             imagesApiService.query = e.currentTarget.elements.query.value.trim();
-
+            
             const fatch = await imagesApiService.fatchImage();
             renderImagesCards(fatch);
 
         }
     } catch (err) {
         error({ text: err });
-        refs.buttonEl.disabled = false;
+        buttonIsOn();
     }
-}
+};
 
 function renderImagesCards(image) {
     refs.galleryEl.insertAdjacentHTML('beforeend', imageCard(image));
+    buttonIsOn();
+    scrollIntoView();
+};
+
+function scrollIntoView() {
+    refs.galleryEl.scrollIntoView({
+    behavior: 'smooth',
+    block: 'end',
+    }); 
+};
+
+function buttonIsOff() {
+    refs.buttonEl.disabled = true;
+};
+
+function buttonIsOn() {
     refs.buttonEl.disabled = false;
-}
+};

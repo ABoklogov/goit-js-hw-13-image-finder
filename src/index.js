@@ -1,10 +1,12 @@
 import { notice, info, success, error } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/Material.css';
-// import * as basicLightbox from 'basiclightbox'
+import * as basicLightbox from 'basiclightbox'
 
 import ImagesApiService from './js/apiService.js';
 import imageCard from './partials/imageCard.hbs';
+
+
 
 const refs = {
     formEl: document.querySelector('.search-form'),
@@ -21,6 +23,7 @@ async function onImagesButtonClick(e) {
     try {
         if (refs.inputEl.value !== imagesApiService.searchQuery) {
             imagesApiService.resetPage();
+            removeCardAndListCountries();
         }
         
         if (e.target.className === 'btn' && refs.inputEl.value === '') {
@@ -38,6 +41,9 @@ async function onImagesButtonClick(e) {
             const fatch = await imagesApiService.fatchImage();
             renderImagesCards(fatch);
 
+            scrollIntoView();
+
+            // openModalWindow(e.target);
         }
     } catch (err) {
         error({ text: err });
@@ -48,11 +54,10 @@ async function onImagesButtonClick(e) {
 function renderImagesCards(image) {
     refs.galleryEl.insertAdjacentHTML('beforeend', imageCard(image));
     buttonIsOn();
-    scrollIntoView();
 };
 
 function scrollIntoView() {
-    refs.galleryEl.scrollIntoView({
+    refs.galleryEl.lastElementChild.scrollIntoView({
     behavior: 'smooth',
     block: 'end',
     }); 
@@ -65,3 +70,20 @@ function buttonIsOff() {
 function buttonIsOn() {
     refs.buttonEl.disabled = false;
 };
+
+function removeCardAndListCountries() {
+        refs.galleryEl.innerHTML = '';
+};
+
+// function openModalWindow(e) {
+//     const img = document.querySelector
+//     const instance = basicLightbox.create(`
+//     <img src="assets/images/image.png" width="800" height="600">
+// `)
+    
+//     imageEl.addEventListener('click', (e) => {
+//         // console.log(e);
+//         instance.show()
+//     })
+// }
+

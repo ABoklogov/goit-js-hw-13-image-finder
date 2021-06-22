@@ -40,10 +40,12 @@ async function onImagesButtonClick(e) {
             
             const fatch = await imagesApiService.fatchImage();
             renderImagesCards(fatch);
-
+           
+            setTimeout(() => {
             scrollIntoView();
-
-            // openModalWindow(e.target);
+            }, 1000);
+            
+            // openModalWindow(refs.galleryEl);
         }
     } catch (err) {
         error({ text: err });
@@ -57,7 +59,7 @@ function renderImagesCards(image) {
 };
 
 function scrollIntoView() {
-    refs.galleryEl.lastElementChild.scrollIntoView({
+    refs.galleryEl.scrollIntoView({
     behavior: 'smooth',
     block: 'end',
     }); 
@@ -75,14 +77,12 @@ function removeCardAndListCountries() {
         refs.galleryEl.innerHTML = '';
 };
 
-// function openModalWindow(e) {
-//     const img = document.querySelector
-//     const instance = basicLightbox.create(`
-//     <img src="assets/images/image.png" width="800" height="600">
-// `)
+// function openModalWindow() {
     
-//     imageEl.addEventListener('click', (e) => {
-//         // console.log(e);
+//     refs.galleryEl.addEventListener('click', (e) => {
+//         const instance = basicLightbox.create(`
+//         <img src=${e.path[1].children[2].currentSrc} width="800" height="600">
+//     `)
 //         instance.show()
 //     })
 // }

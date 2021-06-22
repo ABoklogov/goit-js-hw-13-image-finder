@@ -13,7 +13,7 @@ export default class ImagesApiService {
        const image = await response.json();
        const data = await image.hits;
    
-       this.incrementPage();
+        this.incrementPage();
        return data;
     }
 

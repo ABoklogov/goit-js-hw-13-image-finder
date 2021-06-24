@@ -13,7 +13,7 @@ body {
 }
 
 .is-hidden {
-  position: absolute;
+  /* position: absolute; */
   width: 1px;
   height: 1px;
   margin: -1px;
@@ -59,3 +59,14 @@ input {
 .btn:active {
   background-color: forestgreen;
 }
+
+/* .big-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.box-img {
+  background: rgba(0, 0, 0, 0.8);
+} */

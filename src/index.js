@@ -1,7 +1,7 @@
 import { notice, info, success, error } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/Material.css';
-import * as basicLightbox from 'basiclightbox'
+const basicLightbox = require('basiclightbox');
 
 import ImagesApiService from './js/apiService.js';
 import imageCard from './partials/imageCard.hbs';
@@ -45,13 +45,14 @@ async function onImagesButtonClick(e) {
             scrollIntoView();
             }, 1000);
             
-            // openModalWindow(refs.galleryEl);
         }
     } catch (err) {
         error({ text: err });
         buttonIsOn();
     }
 };
+
+openModalWindow(refs.galleryEl);
 
 function renderImagesCards(image) {
     refs.galleryEl.insertAdjacentHTML('beforeend', imageCard(image));
@@ -74,16 +75,15 @@ function buttonIsOn() {
 };
 
 function removeCardAndListCountries() {
-        refs.galleryEl.innerHTML = '';
+    refs.galleryEl.innerHTML = '';
 };
 
-// function openModalWindow() {
+function openModalWindow() {
     
-//     refs.galleryEl.addEventListener('click', (e) => {
-//         const instance = basicLightbox.create(`
-//         <img src=${e.path[1].children[2].currentSrc} width="800" height="600">
-//     `)
-//         instance.show()
-//     })
-// }
-
+    refs.galleryEl.addEventListener('click', (e) => {
+        const instance = basicLightbox.create(`
+        <img src=${e.path[1].children[2].currentSrc} >
+    `)
+        instance.show();
+    })
+}

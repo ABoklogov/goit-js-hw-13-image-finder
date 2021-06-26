@@ -5,7 +5,7 @@ const basicLightbox = require('basiclightbox');
 
 import ImagesApiService from './js/apiService.js';
 import imageCard from './partials/imageCard.hbs';
-
+// import observer from './js/intObserver.js';
 
 
 const refs = {
@@ -13,6 +13,7 @@ const refs = {
     inputEl: document.querySelector('[name="query"]'),
     buttonEl: document.querySelector('.btn'),
     galleryEl: document.querySelector('.gallery'),
+    
 };
 
 const imagesApiService = new ImagesApiService();
@@ -38,12 +39,12 @@ async function onImagesButtonClick(e) {
             
             imagesApiService.query = e.currentTarget.elements.query.value.trim();
             
-            const fatch = await imagesApiService.fatchImage();
+            let fatch = await imagesApiService.fatchImage();
             renderImagesCards(fatch);
-           
-            setTimeout(() => {
-            scrollIntoView();
-            }, 1000);
+
+            // setTimeout(() => {
+            // scrollIntoView();
+            // }, 1000);
             
         }
     } catch (err) {
@@ -87,3 +88,21 @@ function openModalWindow() {
         instance.show();
     })
 }
+// --------------------------Бесконечный скрол-------------
+
+const  callback =  entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && imagesApiService.query !== '') {
+           imagesApiService.fatchImage().then((data) => renderImagesCards(data))
+        }
+    })
+};
+
+const options = {
+  rootMargin: '300px',
+}
+
+export const observer = new IntersectionObserver(callback, options);
+
+const sentinelEl = document.querySelector('#sentinel');
+observer.observe(sentinelEl);
